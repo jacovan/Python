@@ -1,0 +1,1 @@
+print("Fun\tFun\tFun")
