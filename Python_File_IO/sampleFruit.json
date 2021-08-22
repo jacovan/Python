@@ -1,0 +1,10 @@
+{
+    "name": "Joe",
+    "age": 2,
+    "colors": [
+        "red",
+        "orange",
+        "yellow"
+    ],
+    "fruit": "banana"
+}
