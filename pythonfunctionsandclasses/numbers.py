@@ -2,7 +2,7 @@ def sum(n,*numbers):
     result = n
     for i in numbers:
         result += i
-    return result;
+    return result
 if __name__ == '__main__':
     print(sum(2,4,6))
     print(sum(3,6,9,12))
