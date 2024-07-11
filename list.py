@@ -1,3 +1,3 @@
-file = open('list.txt','r')
-for line in file:
-    print(line)
+with open('list.txt','r') as file:
+    for line in file:
+        print(line)

@@ -18,13 +18,13 @@ def fetch_words(url):
         Returns:
             A list of strings containing words from the document.
     """
-    story = urlopen(url)
-    story_words = []
-    for line in story:
-        line_words = line.decode('utf8').split()
-        for word in line_words:
-            story_words.append(word)
-    story.close()
+    with urlopen(url) as story:
+        story_words = []
+        for line in story:
+            line_words = line.decode('utf8').split()
+            for word in line_words:
+                story_words.append(word)
+
     return story_words
 
 
