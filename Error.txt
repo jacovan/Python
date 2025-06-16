@@ -1,0 +1,80 @@
+---------------------------------------------------------------------------
+OperationalError                          Traceback (most recent call last)
+Cell In[10], line 4
+      1 import pandas
+      3 df = pandas.read_csv("https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DB0201EN-SkillsNetwork/labs/FinalModule_Coursera_V5/data/ChicagoPublicSchools.csv")
+----> 4 df.to_sql("CHICAGO_PUBLIC_SCHOOLS_DATA", con, if_exists='replace', index=False, method="multi")
+
+File C:\users\jacob\appdata\local\programs\python\python39\lib\site-packages\pandas\util\_decorators.py:333, in deprecate_nonkeyword_arguments.<locals>.decorate.<locals>.wrapper(*args, **kwargs)
+    327 if len(args) > num_allow_args:
+    328     warnings.warn(
+    329         msg.format(arguments=_format_argument_list(allow_args)),
+    330         FutureWarning,
+    331         stacklevel=find_stack_level(),
+    332     )
+--> 333 return func(*args, **kwargs)
+
+File C:\users\jacob\appdata\local\programs\python\python39\lib\site-packages\pandas\core\generic.py:3087, in NDFrame.to_sql(self, name, con, schema, if_exists, index, index_label, chunksize, dtype, method)
+   2889 """
+   2890 Write records stored in a DataFrame to a SQL database.
+   2891 
+   (...)
+   3083 [(1,), (None,), (2,)]
+   3084 """  # noqa: E501
+   3085 from pandas.io import sql
+-> 3087 return sql.to_sql(
+   3088     self,
+   3089     name,
+   3090     con,
+   3091     schema=schema,
+   3092     if_exists=if_exists,
+   3093     index=index,
+   3094     index_label=index_label,
+   3095     chunksize=chunksize,
+   3096     dtype=dtype,
+   3097     method=method,
+   3098 )
+
+File C:\users\jacob\appdata\local\programs\python\python39\lib\site-packages\pandas\io\sql.py:842, in to_sql(frame, name, con, schema, if_exists, index, index_label, chunksize, dtype, method, engine, **engine_kwargs)
+    837     raise NotImplementedError(
+    838         "'frame' argument should be either a Series or a DataFrame"
+    839     )
+    841 with pandasSQL_builder(con, schema=schema, need_transaction=True) as pandas_sql:
+--> 842     return pandas_sql.to_sql(
+    843         frame,
+    844         name,
+    845         if_exists=if_exists,
+    846         index=index,
+    847         index_label=index_label,
+    848         schema=schema,
+    849         chunksize=chunksize,
+    850         dtype=dtype,
+    851         method=method,
+    852         engine=engine,
+    853         **engine_kwargs,
+    854     )
+
+File C:\users\jacob\appdata\local\programs\python\python39\lib\site-packages\pandas\io\sql.py:2851, in SQLiteDatabase.to_sql(self, frame, name, if_exists, index, index_label, schema, chunksize, dtype, method, engine, **engine_kwargs)
+   2841 table = SQLiteTable(
+   2842     name,
+   2843     self,
+   (...)
+   2848     dtype=dtype,
+   2849 )
+   2850 table.create()
+-> 2851 return table.insert(chunksize, method)
+
+File C:\users\jacob\appdata\local\programs\python\python39\lib\site-packages\pandas\io\sql.py:1119, in SQLTable.insert(self, chunksize, method)
+   1116     break
+   1118 chunk_iter = zip(*(arr[start_i:end_i] for arr in data_list))
+-> 1119 num_inserted = exec_insert(conn, keys, chunk_iter)
+   1120 # GH 46891
+   1121 if num_inserted is not None:
+
+File C:\users\jacob\appdata\local\programs\python\python39\lib\site-packages\pandas\io\sql.py:2553, in SQLiteTable._execute_insert_multi(self, conn, keys, data_iter)
+   2551 data_list = list(data_iter)
+   2552 flattened_data = [x for row in data_list for x in row]
+-> 2553 conn.execute(self.insert_statement(num_rows=len(data_list)), flattened_data)
+   2554 return conn.rowcount
+
+OperationalError: too many SQL variables
